@@ -3,22 +3,25 @@ package ru.tinkoff.edu.java.linkparser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class GitHubLinkHandler extends LinkHandler{
+public final class GitHubLinkHandler extends AbstractLinkHandler {
 
-    GitHubLinkHandler(LinkHandler linkHandler) {
+    private final Pattern pattern;
+    {
+        pattern = Pattern.compile("^https://github\\.com/(?<user>[^/]+)/(?<repo>[^/]+)/?.*$");
+    }
+    public GitHubLinkHandler(AbstractLinkHandler linkHandler) {
         super(linkHandler);
     }
 
     @Override
-    public String parseLink(String link){
-        Pattern pattern = Pattern.compile("^https://github\\.com/(?<user>[^/]+)/(?<repo>[^/]+)/?.*$");
+    public LinkParserResponse parseLink(String link){
         Matcher matcher = pattern.matcher(link);
         if (matcher.matches()) {
             String user = matcher.group("user");
             String repo = matcher.group("repo");
-            return String.format("%s/%s", user, repo);
-        } else if (nextHandler != null){
-            return nextHandler.parseLink(link);
+            return new GitHubLinkResponse(user, repo);
+        } else if (super.getNextHandler() != null){
+            return super.getNextHandler().parseLink(link);
         }
         return null;
     }

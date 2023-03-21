@@ -1,10 +1,15 @@
 package ru.tinkoff.edu.java.linkparser;
 
 public class LinkParser {
+    private static final AbstractLinkHandler gitHubLinkHandler;
+    private static final AbstractLinkHandler stackOverflowLinkHandler;
 
-    public static String parseLink(String link){
-        LinkHandler gitHubLinkHandler = new GitHubLinkHandler(null);
-        LinkHandler stackOverflowLinkHandler = new StackOverflowLinkHandler(gitHubLinkHandler);
+    static {
+        gitHubLinkHandler = new GitHubLinkHandler(null);
+        stackOverflowLinkHandler = new StackOverflowLinkHandler(gitHubLinkHandler);
+    }
+
+    public static LinkParserResponse parseLink(String link){
         return stackOverflowLinkHandler.parseLink(link);
     }
 }
