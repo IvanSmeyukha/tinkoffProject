@@ -1,5 +1,5 @@
 package ru.tinkoff.edu.java.linkparser;
 
-public interface LinkHandler {
+public sealed interface LinkHandler permits GitHubLinkHandler, StackOverflowLinkHandler{
     LinkParserResponse parseLink(String link);
 }

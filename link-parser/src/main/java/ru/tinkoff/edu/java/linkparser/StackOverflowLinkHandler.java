@@ -3,14 +3,15 @@ package ru.tinkoff.edu.java.linkparser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class StackOverflowLinkHandler extends AbstractLinkHandler {
+public final class StackOverflowLinkHandler implements LinkHandler {
 
+    private final LinkHandler nextHandler;
     private final Pattern pattern;
     {
         pattern = Pattern.compile("^https://stackoverflow\\.com/questions/(?<id>\\d+)/?.*$");
     }
-    public StackOverflowLinkHandler(AbstractLinkHandler linkHandler) {
-        super(linkHandler);
+    public StackOverflowLinkHandler(LinkHandler nextHandler) {
+        this.nextHandler = nextHandler;
     }
 
     @Override
@@ -18,8 +19,8 @@ public final class StackOverflowLinkHandler extends AbstractLinkHandler {
         Matcher matcher = pattern.matcher(link);
         if (matcher.matches()) {
             return new StackOverflowLinkResponse(matcher.group("id"));
-        } else if (super.getNextHandler() != null){
-            return super.getNextHandler().parseLink(link);
+        } else if (nextHandler != null){
+            return nextHandler.parseLink(link);
         }
         return null;
     }

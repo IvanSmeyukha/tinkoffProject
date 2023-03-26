@@ -3,14 +3,14 @@ package ru.tinkoff.edu.java.linkparser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class GitHubLinkHandler extends AbstractLinkHandler {
+public final class GitHubLinkHandler implements LinkHandler {
 
-    private final Pattern pattern;
-    {
-        pattern = Pattern.compile("^https://github\\.com/(?<user>[^/]+)/(?<repo>[^/]+)/?.*$");
-    }
-    public GitHubLinkHandler(AbstractLinkHandler linkHandler) {
-        super(linkHandler);
+    private final LinkHandler nextHandler;
+
+    private final Pattern pattern = Pattern.compile("^https://github\\.com/(?<user>[^/]+)/(?<repo>[^/]+)/?.*$");
+
+    public GitHubLinkHandler(LinkHandler nextHandler) {
+        this.nextHandler = nextHandler;
     }
 
     @Override
@@ -20,8 +20,8 @@ public final class GitHubLinkHandler extends AbstractLinkHandler {
             String user = matcher.group("user");
             String repo = matcher.group("repo");
             return new GitHubLinkResponse(user, repo);
-        } else if (super.getNextHandler() != null){
-            return super.getNextHandler().parseLink(link);
+        } else if (nextHandler != null){
+            return nextHandler.parseLink(link);
         }
         return null;
     }
