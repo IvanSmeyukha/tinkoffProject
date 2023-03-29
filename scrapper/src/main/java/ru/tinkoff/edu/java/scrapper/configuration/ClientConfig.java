@@ -13,18 +13,12 @@ import ru.tinkoff.edu.java.scrapper.client.webclient.StackOverflowClientImpl;
 public class ClientConfig {
 
     @Bean
-    public WebClient webClient() {
-        return WebClient.builder()
-                .build();
+    public GitHubClient gitHubClient(@Value("${github.url:${github.base-url}}") String url){
+        return new GitHubClientImpl(WebClient.builder().baseUrl(url).build());
     }
 
     @Bean
-    public GitHubClient gitHubClient(@Value("${github.url}") String url, WebClient webClient){
-        return new GitHubClientImpl(url, webClient);
-    }
-
-    @Bean
-    public StackOverflowClient stackOverflowClient(@Value("${stackoverflow.url}") String url, WebClient webClient){
-        return new StackOverflowClientImpl(url, webClient);
+    public StackOverflowClient stackOverflowClient(@Value("${stackoverflow.url:${stackoverflow.base-url}}") String url){
+        return new StackOverflowClientImpl(WebClient.builder().baseUrl(url).build());
     }
 }
