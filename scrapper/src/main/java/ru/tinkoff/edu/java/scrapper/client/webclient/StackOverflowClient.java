@@ -1,0 +1,8 @@
+package ru.tinkoff.edu.java.scrapper.client.webclient;
+
+import reactor.core.publisher.Mono;
+import ru.tinkoff.edu.java.scrapper.dto.StackOverflowClientResponse;
+
+public interface StackOverflowClient {
+    Mono<StackOverflowClientResponse> fetchQuestion(Long id);
+}

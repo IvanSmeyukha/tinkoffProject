@@ -1,0 +1,17 @@
+app:
+  test: apptest
+  scheduler:
+    interval: 10000
+
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui"
+
+github:
+  base-url: https://api.github.com/repos/
+  url: https://api.github.com/repos/
+
+stackoverflow:
+  base-url: https://api.stackexchange.com/2.3/questions/
+  url: https://api.stackexchange.com/2.3/questions/
+
