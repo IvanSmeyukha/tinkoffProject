@@ -1,5 +1,10 @@
 app:
   test: apptest
+  token: ${TOKEN}
+
+scrapper:
+  base-url: http://localhost:8081
+  url: http://localhost:8081
 
 springdoc:
   swagger-ui:
