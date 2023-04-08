@@ -29,10 +29,19 @@ public class ListCommandTest {
     @Mock
     private ScrapperClientImpl client;
     private ListCommand listCommand;
+    private Update mockUpdate;
+    private Message mockMessage ;
+    private Chat mockChat;
 
     @BeforeEach
     public void beforeAll(){
         listCommand = new ListCommand(client);
+        mockUpdate = mock(Update.class);
+        mockMessage = mock(Message.class);
+        mockChat = mock(Chat.class);
+        when(mockUpdate.message()).thenReturn(mockMessage);
+        when(mockMessage.chat()).thenReturn(mockChat);
+        when(mockChat.id()).thenReturn(1111L);
     }
 
     @Test
@@ -40,14 +49,6 @@ public class ListCommandTest {
         ListLinksRequest listLinksRequest = new ListLinksRequest(1111L);
         ListLinksResponse listLinksResponse = new ListLinksResponse(Collections.emptyList(), 0);
         when(client.getLinks(listLinksRequest)).thenReturn(Mono.just(listLinksResponse));
-
-        //не уверен, можно ли эти when'ы куда то вынести из метода
-        Update mockUpdate = mock(Update.class);
-        Message mockMessage = mock(Message.class);
-        Chat mockChat = mock(Chat.class);
-        when(mockUpdate.message()).thenReturn(mockMessage);
-        when(mockMessage.chat()).thenReturn(mockChat);
-        when(mockChat.id()).thenReturn(1111L);
 
         assertEquals("Список ссылок пуст", listCommand.handle(mockUpdate).getParameters().get("text").toString());
     }
@@ -61,13 +62,6 @@ public class ListCommandTest {
         ListLinksRequest listLinksRequest = new ListLinksRequest(1111L);
         ListLinksResponse listLinksResponse = new ListLinksResponse(links, 2);
         when(client.getLinks(listLinksRequest)).thenReturn(Mono.just(listLinksResponse));
-
-        Update mockUpdate = mock(Update.class);
-        Message mockMessage = mock(Message.class);
-        Chat mockChat = mock(Chat.class);
-        when(mockUpdate.message()).thenReturn(mockMessage);
-        when(mockMessage.chat()).thenReturn(mockChat);
-        when(mockChat.id()).thenReturn(1111L);
 
         assertEquals("http://example.com\nhttp://example.org",
                 listCommand.handle(mockUpdate).getParameters().get("text").toString());

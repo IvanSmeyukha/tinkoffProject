@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.bot.client.webclient;
 
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.bot.dto.*;
 

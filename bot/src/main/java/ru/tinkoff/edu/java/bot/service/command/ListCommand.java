@@ -4,7 +4,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.java.bot.client.webclient.ScrapperClientImpl;
+import ru.tinkoff.edu.java.bot.client.webclient.ScrapperClient;
 import ru.tinkoff.edu.java.bot.dto.LinkResponse;
 import ru.tinkoff.edu.java.bot.dto.ListLinksRequest;
 import ru.tinkoff.edu.java.bot.dto.ListLinksResponse;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ListCommand implements Command {
     private static final String NO_LINKS_REQUEST = "Список ссылок пуст";
-    private final ScrapperClientImpl client;
+    private final ScrapperClient client;
 
     @Override
     public String command() {
