@@ -61,7 +61,7 @@ public class ScrapperClientImpl implements ScrapperClient{
     }
 
     @Override
-    public Mono<LinkResponse> addLink(AddLinksRequest request) {
+    public Mono<LinkResponse> addLink(AddLinkRequest request) {
         return webClient
                 .post()
                 .uri(uriBuilder -> uriBuilder

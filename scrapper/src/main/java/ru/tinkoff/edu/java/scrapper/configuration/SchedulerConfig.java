@@ -9,4 +9,9 @@ public class SchedulerConfig {
     public long schedulerIntervalMs(ApplicationConfig config) {
         return config.scheduler().interval().toMillis();
     }
+
+    @Bean
+    public long schedulerCheckIntervalMs(ApplicationConfig config) {
+        return config.scheduler().checkInterval().toMillis();
+    }
 }

@@ -2,6 +2,8 @@ app:
   test: apptest
   scheduler:
     interval: 10000
+    check-interval: 500000
+
 server:
   port: 8081
 
@@ -17,3 +19,14 @@ stackoverflow:
   base-url: https://api.stackexchange.com/2.3/questions/
   url: https://api.stackexchange.com/2.3/questions/
 
+bot:
+  base-url: http://localhost:8082
+  url: http://localhost:8082
+
+spring:
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/scrapper
+    username: user
+    password: 1234

@@ -11,6 +11,10 @@ public record StackOverflowClientResponseItem(
         Boolean is_answered,
         @JsonProperty("creation_date")
         OffsetDateTime creation_date,
+        @JsonProperty("last_activity_date")
+        OffsetDateTime lastActivityDate,
+        @JsonProperty("last_edit_date")
+        OffsetDateTime lastEditDate,
         @JsonProperty("link")
         String link
 ) {

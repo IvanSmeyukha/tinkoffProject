@@ -1,4 +1,4 @@
 package ru.tinkoff.edu.java.bot.dto;
 
-public record RegisterChatRequest(long id) {
+public record RegisterChatRequest(Long id) {
 }
