@@ -5,11 +5,9 @@ import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.client.webclient.ScrapperClient;
-import ru.tinkoff.edu.java.bot.dto.AddLinkRequest;
 import ru.tinkoff.edu.java.bot.enums.CommandInfo;
 import ru.tinkoff.edu.java.linkparser.LinkParser;
 
-import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

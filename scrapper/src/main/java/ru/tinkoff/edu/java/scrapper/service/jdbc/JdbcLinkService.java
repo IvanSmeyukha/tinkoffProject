@@ -4,16 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.linkparser.LinkParser;
-import ru.tinkoff.edu.java.linkparser.LinkParserResponse;
 import ru.tinkoff.edu.java.scrapper.domain.LinkRepository;
-import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

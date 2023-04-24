@@ -1,16 +1,11 @@
 package ru.tinkoff.edu.java.bot.client.webclient;
 
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientRequestException;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.bot.dto.*;
 
 import java.net.URI;
-import java.time.Duration;
 
 public class ScrapperClientImpl implements ScrapperClient {
     private static final String TGCHAT_REQUEST_URI = "/tg-chat/{id}";

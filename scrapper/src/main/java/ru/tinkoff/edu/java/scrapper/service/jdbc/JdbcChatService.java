@@ -4,12 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.ChatRepository;
-import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcChatRepository;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

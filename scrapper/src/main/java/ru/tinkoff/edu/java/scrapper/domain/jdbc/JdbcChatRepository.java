@@ -1,13 +1,11 @@
 package ru.tinkoff.edu.java.scrapper.domain.jdbc;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.domain.ChatRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 
 import java.net.URI;
 import java.util.List;

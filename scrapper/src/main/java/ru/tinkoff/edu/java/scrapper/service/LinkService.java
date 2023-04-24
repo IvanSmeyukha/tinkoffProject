@@ -4,7 +4,6 @@ import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 public interface LinkService {

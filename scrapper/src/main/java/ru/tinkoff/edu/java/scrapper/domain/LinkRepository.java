@@ -1,8 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.domain;
 
-import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Subscription;
 
 import java.net.URI;
 import java.time.OffsetDateTime;

@@ -1,20 +1,11 @@
 package ru.tinkoff.edu.java.scrapper.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.tinkoff.edu.java.scrapper.client.webclient.BotClient;
-import ru.tinkoff.edu.java.scrapper.dto.ChatResponse;
-import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcChatService;
-
-import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

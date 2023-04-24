@@ -8,9 +8,7 @@ import ru.tinkoff.edu.java.scrapper.dto.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController

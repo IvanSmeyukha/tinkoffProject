@@ -1,6 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.service.updater;
 
-import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,14 +15,11 @@ import ru.tinkoff.edu.java.scrapper.domain.LinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.GitHubClientResponse;
 import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.dto.StackOverflowClientResponse;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Service

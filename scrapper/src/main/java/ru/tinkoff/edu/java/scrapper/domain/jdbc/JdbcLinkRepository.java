@@ -4,12 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.objenesis.instantiator.sun.SunReflectionFactoryInstantiator;
 import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.domain.LinkRepository;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
-import ru.tinkoff.edu.java.scrapper.dto.entity.Subscription;
 
 import java.net.URI;
 import java.time.OffsetDateTime;

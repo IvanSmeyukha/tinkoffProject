@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.bot.controller;
 
 import com.pengrad.telegrambot.request.SendMessage;
-import io.swagger.v3.oas.models.links.Link;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
