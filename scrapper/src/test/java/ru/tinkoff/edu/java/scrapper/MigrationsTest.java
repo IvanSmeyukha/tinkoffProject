@@ -1,3 +1,5 @@
+package ru.tinkoff.edu.java.scrapper;
+
 import org.junit.Test;
 
 import java.sql.Connection;

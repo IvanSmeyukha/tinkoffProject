@@ -12,7 +12,7 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(@NotNull String test,
                                 @NotNull Scheduler scheduler) {
-    record Scheduler(Duration interval){
+    record Scheduler(Duration interval, Duration checkInterval){
     }
 
 }

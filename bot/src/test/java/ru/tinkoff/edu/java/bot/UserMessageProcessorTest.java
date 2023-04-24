@@ -28,10 +28,10 @@ public class UserMessageProcessorTest {
     @BeforeAll
     public static void beforeAll() {
         List<Command> commandList = new ArrayList<>(List.of(
-                new StartCommand(),
+                new StartCommand(client),
                 new ListCommand(client),
-                new TrackCommand(),
-                new UntrackCommand()));
+                new TrackCommand(client),
+                new UntrackCommand(client)));
         commandList.add(new HelpCommand(List.copyOf(commandList)));
         userMessageProcessor = new UserMessageProcessor(commandList);
     }

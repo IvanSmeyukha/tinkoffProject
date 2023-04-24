@@ -5,25 +5,29 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.bot.dto.*;
 
-public class ScrapperClientImpl implements ScrapperClient{
+import java.net.URI;
+
+public class ScrapperClientImpl implements ScrapperClient {
     private static final String TGCHAT_REQUEST_URI = "/tg-chat/{id}";
     private static final String LINKS_REQUEST_URI = "/links/{id}";
     private final WebClient webClient;
 
-    public ScrapperClientImpl(WebClient webClient){
+    public ScrapperClientImpl(WebClient webClient) {
         this.webClient = webClient;
     }
 
 
     @Override
     public Mono<Void> registerChat(RegisterChatRequest request) {
-        return webClient
+         return webClient
                 .post()
                 .uri(uriBuilder -> uriBuilder
                         .path(TGCHAT_REQUEST_URI)
                         .build(request.id()))
                 .retrieve()
-                .bodyToMono(Void.class);
+//                 .toEntity(ApiErrorResponse.class)
+                 .bodyToMono(Void.class);
+//                .bodyToMono(Long.class);
     }
 
     @Override
@@ -49,25 +53,25 @@ public class ScrapperClientImpl implements ScrapperClient{
     }
 
     @Override
-    public Mono<LinkResponse> removeLink(RemoveLinkRequest request) {
+    public Mono<LinkResponse> removeLink(Long id, String url) {
         return webClient
                 .method(HttpMethod.DELETE)
                 .uri(uriBuilder -> uriBuilder
                         .path(LINKS_REQUEST_URI)
-                        .build(request.id()))
-                .bodyValue(request.link())
+                        .build(id))
+                .bodyValue(new RemoveLinkRequest(URI.create(url)))
                 .retrieve()
                 .bodyToMono(LinkResponse.class);
     }
 
     @Override
-    public Mono<LinkResponse> addLink(AddLinksRequest request) {
+    public Mono<LinkResponse> addLink(Long id, String url) {
         return webClient
                 .post()
                 .uri(uriBuilder -> uriBuilder
                         .path(LINKS_REQUEST_URI)
-                        .build(request.id()))
-                .bodyValue(request.link())
+                        .build(id))
+                .bodyValue(new AddLinkRequest(URI.create(url)))
                 .retrieve()
                 .bodyToMono(LinkResponse.class);
     }

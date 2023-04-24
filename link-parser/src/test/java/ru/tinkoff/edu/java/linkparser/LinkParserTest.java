@@ -26,7 +26,7 @@ public class LinkParserTest {
     public void parseLink_StackOverflowValidLink_StackOverflowLinkResponse() {
         String link = "https://stackoverflow.com/questions/214741/what-is-a-stackoverflowerror";
 
-        assertEquals(new StackOverflowLinkResponse("214741"),
+        assertEquals(new StackOverflowLinkResponse(214741L),
                 LinkParser.parseLink(link));
     }
 

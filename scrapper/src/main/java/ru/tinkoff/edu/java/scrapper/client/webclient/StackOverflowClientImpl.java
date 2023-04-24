@@ -17,7 +17,7 @@ public class StackOverflowClientImpl implements StackOverflowClient{
     public Mono<StackOverflowClientResponse> fetchQuestion(Long id) {
         return webClient
                 .get()
-                .uri(String.valueOf(id), REQUEST_PARAM)
+                .uri(String.format("%d%s", id, REQUEST_PARAM))
                 .retrieve()
                 .bodyToMono(StackOverflowClientResponse.class);
     }

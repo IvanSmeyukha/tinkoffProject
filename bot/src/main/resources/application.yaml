@@ -2,6 +2,9 @@ app:
   test: apptest
   token: ${TOKEN}
 
+server:
+  port: 8082
+
 scrapper:
   base-url: http://localhost:8081
   url: http://localhost:8081
