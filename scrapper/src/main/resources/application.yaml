@@ -2,7 +2,7 @@ app:
   test: apptest
   scheduler:
     interval: 10000
-    check-interval: 500000
+    check-interval: 10000
 
 server:
   port: 8081

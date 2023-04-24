@@ -42,7 +42,7 @@ public class TrackCommand implements Command {
         if (LinkParser.parseLink(url) == null) {
             return new SendMessage(update.message().chat().id(), WRONG_LINK_FORMAT_MESSAGE);
         }
-        client.addLink(new AddLinkRequest(update.message().chat().id(), URI.create(url)));
+        client.addLink(update.message().chat().id(), url).block();
         return new SendMessage(update.message().chat().id(), SUCCESS_MESSAGE);
     }
 }

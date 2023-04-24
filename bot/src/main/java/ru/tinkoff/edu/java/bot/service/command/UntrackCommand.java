@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UntrackCommand implements Command{
     private final ScrapperClient client;
-    private static final String SUCCESS_MESSAGE = "Ссылка добавлена в отслеживаемые";
+    private static final String SUCCESS_MESSAGE = "Ссылка удалена из отслеживаемых";
     private static final String WRONG_LINK_FORMAT_MESSAGE = "Неверный формат ссылки";
     private static final String WRONG_MESSAGE_FORMAT_MESSAGE = "Неверный формат команды";
     private static final Pattern pattern = Pattern.compile("^\\s*/untrack\\s+(?<url>\\S+)\\s*$");
@@ -41,7 +41,7 @@ public class UntrackCommand implements Command{
         if (LinkParser.parseLink(url) == null) {
             return new SendMessage(update.message().chat().id(), WRONG_LINK_FORMAT_MESSAGE);
         }
-        client.removeLink(new RemoveLinkRequest(update.message().chat().id(), URI.create(url)));
+        client.removeLink(update.message().chat().id(), url).block();
         return new SendMessage(update.message().chat().id(), SUCCESS_MESSAGE);
     }
 }

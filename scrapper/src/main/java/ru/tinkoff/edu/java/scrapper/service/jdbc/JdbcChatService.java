@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.ChatRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcChatRepository;
@@ -17,15 +18,14 @@ public class JdbcChatService implements ChatService {
     private final ChatRepository chatRepository;
     @Override
     public void register(Long chatId) {
-        chatRepository.add(chatId);
+        try {
+            chatRepository.add(chatId);
+        } catch (DuplicateKeyException ignored){
+        }
     }
 
     @Override
-    public Chat unregister(Long chatId) {
-        Optional<Chat> chatOptional = chatRepository.findById(chatId);
-        if(chatOptional.isPresent()){
-            return chatRepository.remove(chatId).get();
-        }
-        return null;
+    public void unregister(Long chatId) {
+        chatRepository.remove(chatId);
     }
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.OffsetDateTime;
 
 public record StackOverflowClientResponseItem(
+        @JsonProperty("question_id")
+        Long questionId,
         @JsonProperty("account_id")
         Long accountId,
         @JsonProperty("is_answered")

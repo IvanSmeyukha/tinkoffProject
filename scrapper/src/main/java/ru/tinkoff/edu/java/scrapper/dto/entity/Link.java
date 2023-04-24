@@ -6,6 +6,8 @@ import java.net.URI;
 import java.time.OffsetDateTime;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Link {

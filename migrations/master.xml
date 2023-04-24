@@ -10,4 +10,5 @@
     <include file="2023-04-08-CRS-1_create_links_table.sql" relativeToChangelogFile="true"/>
     <include file="2023-04-08-CRS-2_create_chats_table.sql" relativeToChangelogFile="true"/>
     <include file="2023-04-08-CRS-3_create_links-chats_table.sql" relativeToChangelogFile="true"/>
+    <include file="2023-04-20-CRS-4_alter_table_links_add_last_check_time_and_last_update_time.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

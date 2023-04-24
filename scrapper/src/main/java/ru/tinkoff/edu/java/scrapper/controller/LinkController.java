@@ -6,6 +6,7 @@ import ru.tinkoff.edu.java.scrapper.dto.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
+import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcLinkService;
 
@@ -29,12 +30,12 @@ public class LinkController {
     }
 
     @PostMapping("/links/{id}")
-    public LinkResponse addLink(@PathVariable Long id, @RequestBody AddLinkRequest request) {
+    public LinkResponse addLink(@PathVariable Long id, @RequestBody AddLinkRequest request) throws LinkFormatException {
         return new LinkResponse(linkService.add(id, request.url()).getUrl());
     }
 
     @DeleteMapping("/links/{id}")
     public LinkResponse removeLink(@PathVariable Long id, @RequestBody RemoveLinkRequest request) {
-        return new LinkResponse(linkService.remove(id, request.url()).getUrl());
+        return new LinkResponse(linkService.removeSubscription(id, request.url()).getUrl());
     }
 }

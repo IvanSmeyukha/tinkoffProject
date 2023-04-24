@@ -4,5 +4,5 @@ import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 
 public interface ChatService {
     void register(Long chatId);
-    Chat unregister(Long chatId);
+    void unregister(Long chatId);
 }

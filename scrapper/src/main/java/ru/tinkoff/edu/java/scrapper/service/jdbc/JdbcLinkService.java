@@ -1,15 +1,20 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.linkparser.LinkParser;
+import ru.tinkoff.edu.java.linkparser.LinkParserResponse;
 import ru.tinkoff.edu.java.scrapper.domain.LinkRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
+import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,32 +25,29 @@ public class JdbcLinkService implements LinkService {
 
     @Transactional
     @Override
-    public Link add(Long chatId, URI url) {
+    public Link add(Long chatId, URI url) throws LinkFormatException {
         Link link;
-        Optional<Link> linkOptional = linkRepository.findLinkByUrl(url.toString());
-        if(linkOptional.isEmpty()){
-            link = linkRepository.add(url).get();
-            linkRepository.addChatLinkSubscription(chatId, linkOptional.get().getId());
-        } else {
-            link = linkRepository.findLinkByUrl(url.toString()).get();
+        Optional<Link> linkOptional = linkRepository.findLinkByUrl(url);
+        link = linkOptional.orElseGet(() -> linkRepository.add(url).get());
+        try {
+            linkRepository.addChatLinkSubscription(chatId, link.getId());
+        } catch (DuplicateKeyException ignored){
         }
-        linkRepository.addChatLinkSubscription(chatId, link.getId());
         return link;
     }
+
 
     @Transactional
     @Override
-    public Link remove(Long chatId, URI url) {
-        Link link = null;
-        Optional<Link> linkOptional = linkRepository.findLinkByUrl(url.toString());
-        if(linkOptional.isPresent()){
-            link = linkRepository.removeLink(linkOptional.get().getId()).get();
-        }
-        return link;
+    public Link removeSubscription(Long chatId, URI url) {
+        Optional<Link> linkOptional = linkRepository.findLinkByUrl(url);
+        Long linkId = linkRepository.removeChatLinkSubscription(chatId, url).get();
+        linkRepository.removeUnusedLinks(linkId);
+        return linkOptional.get();
     }
 
     @Override
-    public Collection<Link> listAll(Long chatId) {
+    public List<Link> listAll(Long chatId) {
         return linkRepository.findLinksByChatId(chatId).get();
     }
 

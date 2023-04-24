@@ -2,5 +2,5 @@ package ru.tinkoff.edu.java.bot.dto;
 
 import java.net.URI;
 
-public record RemoveLinkRequest(long id, URI link) {
+public record RemoveLinkRequest(URI url) {
 }

@@ -25,7 +25,7 @@ public class StartCommand implements Command{
 
     @Override
     public SendMessage handle(Update update) {
-        client.registerChat(new RegisterChatRequest(update.message().chat().id()));
+        client.registerChat(new RegisterChatRequest(update.message().chat().id())).block();
         return new SendMessage(update.message().chat().id(), WELCOME_MESSAGE);
     }
 }

@@ -13,7 +13,7 @@ public interface ChatRepository{
 
     Optional<Chat> findById(Long chatId);
 
-    Optional<List<Chat>> findChatsByUrl(URI url);
+    Optional<List<Long>> findChatsByUrl(URI url);
 
-    Optional<Chat> remove(Long chatId);
+    void remove(Long chatId);
 }

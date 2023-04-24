@@ -12,18 +12,17 @@ import java.util.Optional;
 public interface LinkRepository {
     Optional<Link> add(URI url);
 
-    Optional<List<Link>> findAllLinks();
+    Optional<Long> removeChatLinkSubscription(Long chatId, URI url);
 
-    Optional<Link> findLinkById(Long linkId);
+    void removeUnusedLinks(Long linkId);
 
-    Optional<Link> removeLink(Long linkId);
-
-    Optional<Link> findLinkByUrl(String url);
+    Optional<Link> findLinkByUrl(URI url);
 
     Optional<List<Link>> findLinksByChatId(Long chatId);
 
-
     Optional<List<Link>> findLongTimeAgoCheckedLinks(OffsetDateTime lastCheckDate);
 
-    Optional<Subscription> addChatLinkSubscription(Long chatId, Long linkId);
+    void addChatLinkSubscription(Long chatId, Long linkId);
+
+    void updateLink(Link link);
 }

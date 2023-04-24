@@ -15,7 +15,7 @@ public class GitHubClientImpl implements GitHubClient{
     public Mono<GitHubClientResponse> fetchRepo(String user, String repo) {
         return webClient
                 .get()
-                .uri(user , "/", repo)
+                .uri(String.format("%s/%s", user, repo))
                 .retrieve()
                 .bodyToMono(GitHubClientResponse.class);
     }

@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.bot.controller;
 
 import com.pengrad.telegrambot.request.SendMessage;
+import io.swagger.v3.oas.models.links.Link;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +16,13 @@ public class UpdateController {
 
     @PostMapping(path = "/updates")
     public void sendUpdate(@RequestBody LinkUpdateRequest linkUpdate) {
-        linkUpdate.tgChatIds().forEach(id ->
-                bot.execute(new SendMessage(id, String.format("%s\n%s", linkUpdate.description(), linkUpdate.url())))
-        );
+//        linkUpdate.tgChatIds().forEach(id ->
+//                bot.execute(new SendMessage(id, String.format("%s\n%s", linkUpdate.description(), linkUpdate.url())))
+//        );
+        System.out.println("aaaa");
+        for(Long id : linkUpdate.tgChatIds()){
+            System.out.println(id);
+            bot.execute(new SendMessage(id, String.format("%s\n%s", linkUpdate.description(), linkUpdate.url())));
+        }
     }
 }
