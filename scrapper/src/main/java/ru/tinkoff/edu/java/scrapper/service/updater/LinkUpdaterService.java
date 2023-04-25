@@ -10,13 +10,14 @@ import ru.tinkoff.edu.java.linkparser.StackOverflowLinkResponse;
 import ru.tinkoff.edu.java.scrapper.client.webclient.BotClient;
 import ru.tinkoff.edu.java.scrapper.client.webclient.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.client.webclient.StackOverflowClient;
-import ru.tinkoff.edu.java.scrapper.domain.ChatRepository;
-import ru.tinkoff.edu.java.scrapper.domain.LinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.GitHubClientResponse;
 import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.dto.StackOverflowClientResponse;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
+import ru.tinkoff.edu.java.scrapper.service.ChatService;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
+import java.net.URI;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -25,8 +26,8 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class LinkUpdaterService implements LinkUpdater {
-    private final LinkRepository linkRepository;
-    private final ChatRepository chatRepository;
+    private final LinkService linkService;
+    private final ChatService chatService;
     private final GitHubClient gitHubClient;
     private final StackOverflowClient stackOverflowClient;
     private final BotClient botClient;
@@ -35,7 +36,7 @@ public class LinkUpdaterService implements LinkUpdater {
     @Override
     public void update(Duration checkInterval) {
         List<Link> uncheckedLinks =
-                linkRepository.findLongTimeAgoCheckedLinks(OffsetDateTime.now().minus(checkInterval)).get();
+                linkService.findLongTimeAgoCheckedLinks(OffsetDateTime.now().minus(checkInterval));
         for (Link link : uncheckedLinks) {
             LinkParserResponse response = LinkParser.parseLink(link.getUrl().toString());
             if (response instanceof GitHubLinkResponse resp) {
@@ -43,10 +44,6 @@ public class LinkUpdaterService implements LinkUpdater {
             } else if (response instanceof StackOverflowLinkResponse resp) {
                 checkStackOverflowUpdates(resp, link);
             }
-//            switch (response) {
-//                case GitHubLinkResponse resp -> checkGitHubUpdates(resp, link);
-//                case StackOverflowLinkResponse resp -> checkStackOverflowUpdates(resp, link);
-//            }
         }
     }
 
@@ -58,7 +55,7 @@ public class LinkUpdaterService implements LinkUpdater {
         if (gitHubClientResponse.updatedAt().isAfter(link.getLastUpdateTime())) {
             sendUpdates(link, "Содержимое ссылки было обновлено");
             link.setLastUpdateTime(gitHubClientResponse.updatedAt());
-            linkRepository.updateLink(link);
+            linkService.updateLink(link);
         }
     }
 
@@ -77,19 +74,18 @@ public class LinkUpdaterService implements LinkUpdater {
                     if (response.lastEditDate().isAfter(link.getLastUpdateTime())) {
                         sendUpdates(link, "Содержимое ссылки было обновлено");
                         link.setLastUpdateTime(response.lastEditDate());
-                        linkRepository.updateLink(link);
+                        linkService.updateLink(link);
                     }
                 });
     }
 
     private void sendUpdates(Link link, String description) {
-        List<Long> list = chatRepository.findChatsByUrl(link.getUrl()).get();
         botClient.fetchUpdate(
                 new LinkUpdateRequest(
-                        link.getUrl(),
+                        URI.create(link.getUrl()),
                         description,
-                        chatRepository
-                                .findChatsByUrl(link.getUrl()).get()
+                        chatService
+                                .findChatsByUrl(URI.create(link.getUrl()))
                 )
         );
     }
