@@ -44,12 +44,9 @@ public class JpaLinkTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     public void findByUrl() {
-        Link link = new Link();
-        link.setUrl(TEST_LINK_1);
-        link.setLastCheckTime(OffsetDateTime.now());
-        linkRepository.save(link);
+        linkRepository.save(makeLink(TEST_LINK_1, OffsetDateTime.now()));
 
-        link = linkRepository.findByUrl(TEST_LINK_1).get();
+        Link link = linkRepository.findByUrl(TEST_LINK_1).get();
 
         assertNotNull(link);
     }
@@ -58,15 +55,9 @@ public class JpaLinkTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     public void findLinksByLastCheckTimeAfter() {
-        Link link = new Link();
-        link.setUrl(TEST_LINK_1);
-        link.setLastCheckTime(OffsetDateTime.now().plusMinutes(1));
-        linkRepository.save(link);
+        linkRepository.save(makeLink(TEST_LINK_1, OffsetDateTime.now().minusMinutes(1)));
 
-        link = new Link();
-        link.setUrl(TEST_LINK_2);
-        link.setLastCheckTime(OffsetDateTime.now().minusMinutes(1));
-        linkRepository.save(link);
+        linkRepository.save(makeLink(TEST_LINK_2, OffsetDateTime.now().plusMinutes(1)));
 
         List<Link> links = linkRepository.findLinksByLastCheckTimeAfter(OffsetDateTime.now());
 
@@ -78,14 +69,11 @@ public class JpaLinkTest extends IntegrationEnvironment {
     @Transactional
     @Rollback
     public void removeUnusedLinks() {
-        Link link1 = new Link();
-        link1.setUrl(TEST_LINK_1);
-        link1.setLastCheckTime(OffsetDateTime.now().plusMinutes(1));
+
+        Link link1 = makeLink(TEST_LINK_1, OffsetDateTime.now());
         linkRepository.save(link1);
 
-        Link link2 = new Link();
-        link2.setUrl(TEST_LINK_2);
-        link2.setLastCheckTime(OffsetDateTime.now().minusMinutes(1));
+        Link link2 = makeLink(TEST_LINK_2, OffsetDateTime.now());
         linkRepository.save(link2);
 
         Chat chat = chatRepository.save(new Chat(1L));
@@ -97,6 +85,13 @@ public class JpaLinkTest extends IntegrationEnvironment {
 
         assertEquals(links.size(), 1);
         assertEquals(links.get(0).getUrl(), TEST_LINK_1);
+    }
+
+    private Link makeLink(String url, OffsetDateTime lastCheckTime){
+        Link link = new Link();
+        link.setUrl(url);
+        link.setLastCheckTime(lastCheckTime);
+        return link;
     }
 
 }
