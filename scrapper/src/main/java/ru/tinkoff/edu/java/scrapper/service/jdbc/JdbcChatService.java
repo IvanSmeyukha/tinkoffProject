@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.ChatRepository;
+import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
 
+import java.net.URI;
+import java.util.List;
 
-@Service
+
 @RequiredArgsConstructor
 public class JdbcChatService implements ChatService {
 
@@ -23,5 +26,10 @@ public class JdbcChatService implements ChatService {
     @Override
     public void unregister(Long chatId) {
         chatRepository.remove(chatId);
+    }
+
+    @Override
+    public List<Long> findChatsByUrl(URI url) {
+        return chatRepository.findChatsByUrl(url).get();
     }
 }

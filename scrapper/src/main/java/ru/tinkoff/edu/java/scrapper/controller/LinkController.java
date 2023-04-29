@@ -9,6 +9,7 @@ import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -22,18 +23,18 @@ public class LinkController {
         List<LinkResponse> listLinksResponse = linkService
                 .listAll(id)
                 .stream()
-                .map(link -> new LinkResponse(link.getUrl()))
+                .map(link -> new LinkResponse(URI.create(link.getUrl())))
                 .toList();
         return new ListLinksResponse(listLinksResponse, listLinksResponse.size());
     }
 
     @PostMapping("/links/{id}")
     public LinkResponse addLink(@PathVariable Long id, @RequestBody AddLinkRequest request) throws LinkFormatException {
-        return new LinkResponse(linkService.add(id, request.url()).getUrl());
+        return new LinkResponse(URI.create(linkService.add(id, request.url()).getUrl()));
     }
 
     @DeleteMapping("/links/{id}")
     public LinkResponse removeLink(@PathVariable Long id, @RequestBody RemoveLinkRequest request) {
-        return new LinkResponse(linkService.removeSubscription(id, request.url()).getUrl());
+        return new LinkResponse(URI.create(linkService.removeSubscription(id, request.url()).getUrl()));
     }
 }

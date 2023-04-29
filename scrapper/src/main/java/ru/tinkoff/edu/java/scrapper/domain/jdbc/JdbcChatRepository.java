@@ -11,7 +11,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 @RequiredArgsConstructor
 public class JdbcChatRepository implements ChatRepository {
     private final JdbcTemplate jdbcTemplate;

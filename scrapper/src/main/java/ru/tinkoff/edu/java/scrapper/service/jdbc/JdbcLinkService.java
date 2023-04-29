@@ -10,10 +10,10 @@ import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.net.URI;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
 
@@ -40,6 +40,16 @@ public class JdbcLinkService implements LinkService {
         Long linkId = linkRepository.removeChatLinkSubscription(chatId, url).get();
         linkRepository.removeUnusedLinks(linkId);
         return linkOptional.get();
+    }
+
+    @Override
+    public List<Link> findLongTimeAgoCheckedLinks(OffsetDateTime lastCheckDate) {
+        return linkRepository.findLongTimeAgoCheckedLinks(lastCheckDate).get();
+    }
+
+    @Override
+    public void updateLink(Link link) {
+        linkRepository.updateLink(link);
     }
 
     @Override

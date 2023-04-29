@@ -3,6 +3,7 @@ app:
   scheduler:
     interval: 10000
     check-interval: 10000
+  database-access-type: jpa
 
 server:
   port: 8081
