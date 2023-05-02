@@ -3,7 +3,8 @@ app:
   scheduler:
     interval: 10000
     check-interval: 10000
-  database-access-type: jpa
+  database-access-type: jdbc
+  use-query: true
 
 server:
   port: 8081
@@ -23,6 +24,10 @@ stackoverflow:
 bot:
   base-url: http://localhost:8082
   url: http://localhost:8082
+
+rabbitmq:
+  queue-name: "queue"
+  exchange-name: "exchange"
 
 spring:
   liquibase:

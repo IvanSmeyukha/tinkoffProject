@@ -12,3 +12,14 @@ scrapper:
 springdoc:
   swagger-ui:
     path: "/swagger-ui"
+
+rabbitmq:
+  queue-name: "queue"
+  exchange-name: "exchange"
+  routing-key-name: ""
+
+spring:
+  rabbitmq:
+    listener:
+      simple:
+        default-requeue-rejected: false

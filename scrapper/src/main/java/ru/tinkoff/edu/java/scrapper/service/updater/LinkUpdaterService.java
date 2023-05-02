@@ -31,6 +31,7 @@ public class LinkUpdaterService implements LinkUpdater {
     private final GitHubClient gitHubClient;
     private final StackOverflowClient stackOverflowClient;
     private final BotClient botClient;
+    private final UpdatesSender updatesSender;
 
     @Transactional
     @Override
@@ -80,7 +81,7 @@ public class LinkUpdaterService implements LinkUpdater {
     }
 
     private void sendUpdates(Link link, String description) {
-        botClient.fetchUpdate(
+        updatesSender.sendUpdate(
                 new LinkUpdateRequest(
                         URI.create(link.getUrl()),
                         description,

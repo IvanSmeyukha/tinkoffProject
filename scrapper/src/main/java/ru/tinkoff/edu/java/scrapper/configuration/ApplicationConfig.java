@@ -13,7 +13,9 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(@NotNull String test,
                                 @NotNull Scheduler scheduler,
-                                @NotNull AccessType databaseAccessType) {
+                                @NotNull AccessType databaseAccessType,
+                                @NotNull boolean useQuery
+) {
     record Scheduler(Duration interval, Duration checkInterval){
     }
 
