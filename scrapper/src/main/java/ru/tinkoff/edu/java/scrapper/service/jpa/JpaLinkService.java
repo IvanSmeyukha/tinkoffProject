@@ -24,8 +24,7 @@ public class JpaLinkService implements LinkService {
         Link link = new Link();
         link.setUrl(url.toString());
         link.setLastCheckTime(OffsetDateTime.now());
-//        link.setLastUpdateTime(OffsetDateTime.now());
-        link.setLastUpdateTime(OffsetDateTime.now().minusDays(5));
+        link.setLastUpdateTime(OffsetDateTime.now());
         Optional<Link> linkOptional = linkRepository.findByUrl(url.toString());
         Link addedlink = linkOptional.orElseGet(() -> linkRepository.save(link));
         Chat chat = chatRepository.findById(chatId).get();

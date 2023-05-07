@@ -5,28 +5,34 @@ import org.springframework.amqp.support.converter.ClassMapper;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
+import ru.tinkoff.edu.java.bot.service.UpdatesSender;
+import ru.tinkoff.edu.java.bot.service.listener.ScrapperQueueListener;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "true")
 public class RabbitMQConfig {
-    @Value("${rabbitmq.queue-name}")
-    private String queueName;
-    @Value("${rabbitmq.exchange-name}")
-    private String exchangeName;
-    @Value("${rabbitmq.routing-key-name}")
-    private String routingKey;
+    private final String queueName;
+    private final String exchangeName;
+    private final String routingKey;
+
+    public RabbitMQConfig(ApplicationConfig applicationConfig){
+        this.queueName = applicationConfig.queueName();
+        this.exchangeName = applicationConfig.exchangeName();
+        this.routingKey = applicationConfig.routingkeyName();
+    }
 
 
     @Bean
     public DirectExchange deadDirectExchange() {
         return new DirectExchange(
-                String.join(exchangeName,".dlx"),
+                exchangeName + ".dlx",
                 false,
                 false
         );
@@ -59,5 +65,10 @@ public class RabbitMQConfig {
         Jackson2JsonMessageConverter jsonConverter=new Jackson2JsonMessageConverter();
         jsonConverter.setClassMapper(classMapper);
         return jsonConverter;
+    }
+
+    @Bean
+    public ScrapperQueueListener scrapperQueueListener(UpdatesSender updatesSender){
+        return new ScrapperQueueListener(updatesSender);
     }
 }

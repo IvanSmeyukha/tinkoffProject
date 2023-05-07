@@ -7,7 +7,6 @@ import ru.tinkoff.edu.java.linkparser.GitHubLinkResponse;
 import ru.tinkoff.edu.java.linkparser.LinkParser;
 import ru.tinkoff.edu.java.linkparser.LinkParserResponse;
 import ru.tinkoff.edu.java.linkparser.StackOverflowLinkResponse;
-import ru.tinkoff.edu.java.scrapper.client.webclient.BotClient;
 import ru.tinkoff.edu.java.scrapper.client.webclient.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.client.webclient.StackOverflowClient;
 import ru.tinkoff.edu.java.scrapper.dto.GitHubClientResponse;
@@ -30,7 +29,6 @@ public class LinkUpdaterService implements LinkUpdater {
     private final ChatService chatService;
     private final GitHubClient gitHubClient;
     private final StackOverflowClient stackOverflowClient;
-    private final BotClient botClient;
     private final UpdatesSender updatesSender;
 
     @Transactional

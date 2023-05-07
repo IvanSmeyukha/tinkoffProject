@@ -19,15 +19,13 @@ public class ScrapperClientImpl implements ScrapperClient {
 
     @Override
     public Mono<Void> registerChat(RegisterChatRequest request) {
-         return webClient
+        return webClient
                 .post()
                 .uri(uriBuilder -> uriBuilder
                         .path(TGCHAT_REQUEST_URI)
                         .build(request.id()))
                 .retrieve()
-//                 .toEntity(ApiErrorResponse.class)
-                 .bodyToMono(Void.class);
-//                .bodyToMono(Long.class);
+                .bodyToMono(Void.class);
     }
 
     @Override
