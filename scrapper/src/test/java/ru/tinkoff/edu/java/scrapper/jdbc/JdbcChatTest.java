@@ -3,9 +3,12 @@ package ru.tinkoff.edu.java.scrapper.jdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
@@ -28,6 +31,14 @@ public class JdbcChatTest extends IntegrationEnvironment {
     private JdbcTemplate jdbcTemplate;
 
     private final URI TEST_LINK = URI.create("https://edu.tinkoff.ru");
+
+    @Configuration
+    static class MyIntegrationTests {
+        @DynamicPropertySource
+        static void registerProperties(DynamicPropertyRegistry registry) {
+            registry.add("database-access-type", () -> "jdbc");
+        }
+    }
 
     private final Long CHAT_ID = 1L;
     @Test
