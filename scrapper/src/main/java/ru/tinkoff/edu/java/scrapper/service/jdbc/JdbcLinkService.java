@@ -2,13 +2,11 @@ package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.LinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -27,11 +25,10 @@ public class JdbcLinkService implements LinkService {
         link = linkOptional.orElseGet(() -> linkRepository.add(url).get());
         try {
             linkRepository.addChatLinkSubscription(chatId, link.getId());
-        } catch (DuplicateKeyException ignored){
+        } catch (DuplicateKeyException ignored) {
         }
         return link;
     }
-
 
     @Transactional
     @Override

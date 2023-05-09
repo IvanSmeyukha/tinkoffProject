@@ -15,7 +15,6 @@ import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
-
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -41,6 +40,7 @@ public class JdbcChatTest extends IntegrationEnvironment {
     }
 
     private final Long CHAT_ID = 1L;
+
     @Test
     @Transactional
     @Rollback
@@ -48,10 +48,10 @@ public class JdbcChatTest extends IntegrationEnvironment {
         chatRepository.add(CHAT_ID);
 
         String query = """
-                SELECT * FROM chats
-                WHERE id = ?
-                """;
-        Chat chat =  jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Chat.class), CHAT_ID);
+            SELECT * FROM chats
+            WHERE id = ?
+            """;
+        Chat chat = jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Chat.class), CHAT_ID);
 
         assertNotNull(chat);
     }
@@ -75,41 +75,41 @@ public class JdbcChatTest extends IntegrationEnvironment {
         addSubscription(chat.getId(), link.getId());
         List<Long> chatList = chatRepository.findChatsByUrl(TEST_LINK).get();
 
-        assert(!chatList.isEmpty());
+        assert (!chatList.isEmpty());
     }
 
     private void addSubscription(Long chatId, Long linkId) {
         String query = """
-                INSERT INTO links_chats (chat_id, link_id)
-                VALUES (?, ?)
-                """;
+            INSERT INTO links_chats (chat_id, link_id)
+            VALUES (?, ?)
+            """;
         jdbcTemplate.update(
-                query,
-                chatId,
-                linkId
+            query,
+            chatId,
+            linkId
         );
     }
 
     private Chat addChat() {
         String query = """
-                INSERT INTO chats (id)
-                VALUES (1)
-                RETURNING id
-                """;
+            INSERT INTO chats (id)
+            VALUES (1)
+            RETURNING id
+            """;
         return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Chat.class));
     }
 
     private Link addLink() {
         String query = """
-                INSERT INTO links (url, last_check_time)
-                VALUES (?, ?)
-                RETURNING *
-                """;
+            INSERT INTO links (url, last_check_time)
+            VALUES (?, ?)
+            RETURNING *
+            """;
         return jdbcTemplate.queryForObject(
-                query,
-                new BeanPropertyRowMapper<>(Link.class),
-                TEST_LINK.toString(),
-                OffsetDateTime.now()
+            query,
+            new BeanPropertyRowMapper<>(Link.class),
+            TEST_LINK.toString(),
+            OffsetDateTime.now()
         );
     }
 }

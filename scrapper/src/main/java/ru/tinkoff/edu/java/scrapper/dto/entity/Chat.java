@@ -2,10 +2,7 @@ package ru.tinkoff.edu.java.scrapper.dto.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +19,7 @@ public class Chat {
     @ManyToMany(mappedBy = "chats")
     private Set<Link> links = new HashSet<>();
 
-    public Chat(Long id){
+    public Chat(Long id) {
         this.id = id;
     }
 

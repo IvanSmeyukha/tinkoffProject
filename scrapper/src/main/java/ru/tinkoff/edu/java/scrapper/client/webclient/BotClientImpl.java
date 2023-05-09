@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 
-
 @RequiredArgsConstructor
 public class BotClientImpl implements BotClient {
     private final WebClient webClient;
@@ -13,11 +12,11 @@ public class BotClientImpl implements BotClient {
     @Override
     public void fetchUpdate(LinkUpdateRequest linkUpdateRequest) {
         webClient
-                .post()
-                .uri(UPDATES)
-                .bodyValue(linkUpdateRequest)
-                .retrieve()
-                .bodyToMono(Void.class)
-                .block();
+            .post()
+            .uri(UPDATES)
+            .bodyValue(linkUpdateRequest)
+            .retrieve()
+            .bodyToMono(Void.class)
+            .block();
     }
 }

@@ -1,13 +1,11 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaChatRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
-
 import java.net.URI;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import java.util.List;
 public class JpaChatService implements ChatService {
     private final JpaLinkRepository linkRepository;
     private final JpaChatRepository chatRepository;
-
 
     @Override
     public void register(Long chatId) {

@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.scrapper.service.updater.LinkUpdater;
-
 import java.time.Duration;
-import java.time.OffsetDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -18,7 +16,7 @@ public class LinkUpdaterScheduler {
     private Duration checkInterval;
 
     @Scheduled(fixedDelayString = "#{@schedulerIntervalMs}")
-    public void update(){
+    public void update() {
         linkUpdater.update(checkInterval);
     }
 }

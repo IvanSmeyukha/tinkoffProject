@@ -8,7 +8,6 @@ import ru.tinkoff.edu.java.scrapper.dto.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-
 import java.net.URI;
 import java.util.List;
 
@@ -21,10 +20,10 @@ public class LinkController {
     @GetMapping("/links/{id}")
     public ListLinksResponse getLinks(@PathVariable Long id) {
         List<LinkResponse> listLinksResponse = linkService
-                .listAll(id)
-                .stream()
-                .map(link -> new LinkResponse(URI.create(link.getUrl())))
-                .toList();
+            .listAll(id)
+            .stream()
+            .map(link -> new LinkResponse(URI.create(link.getUrl())))
+            .toList();
         return new ListLinksResponse(listLinksResponse, listLinksResponse.size());
     }
 

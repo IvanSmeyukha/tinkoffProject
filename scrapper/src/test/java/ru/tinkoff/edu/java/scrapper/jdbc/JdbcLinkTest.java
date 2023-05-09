@@ -15,7 +15,6 @@ import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
-
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -31,7 +30,6 @@ public class JdbcLinkTest extends IntegrationEnvironment {
     private JdbcTemplate jdbcTemplate;
 
     private final URI TEST_LINK = URI.create("https://edu.tinkoff.ru");
-
 
     @Configuration
     static class MyIntegrationTests {
@@ -71,9 +69,9 @@ public class JdbcLinkTest extends IntegrationEnvironment {
         Chat chat = addChat();
         linkRepository.addChatLinkSubscription(chat.getId(), link.getId());
         String query = """
-                SELECT link_id FROM links_chats
-                WHERE chat_id = ?
-                """;
+            SELECT link_id FROM links_chats
+            WHERE chat_id = ?
+            """;
         Long linkId = jdbcTemplate.queryForObject(query, Long.class, chat.getId());
 
         assertNotNull(linkId);
@@ -94,24 +92,24 @@ public class JdbcLinkTest extends IntegrationEnvironment {
 
     private Chat addChat() {
         String query = """
-                INSERT INTO chats (id)
-                VALUES (1)
-                RETURNING id
-                """;
+            INSERT INTO chats (id)
+            VALUES (1)
+            RETURNING id
+            """;
         return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Chat.class));
     }
 
     private Link addLink() {
         String query = """
-                INSERT INTO links (url, last_check_time)
-                VALUES (?, ?)
-                RETURNING *
-                """;
+            INSERT INTO links (url, last_check_time)
+            VALUES (?, ?)
+            RETURNING *
+            """;
         return jdbcTemplate.queryForObject(
-                query,
-                new BeanPropertyRowMapper<>(Link.class),
-                TEST_LINK.toString(),
-                OffsetDateTime.now()
+            query,
+            new BeanPropertyRowMapper<>(Link.class),
+            TEST_LINK.toString(),
+            OffsetDateTime.now()
         );
     }
 
