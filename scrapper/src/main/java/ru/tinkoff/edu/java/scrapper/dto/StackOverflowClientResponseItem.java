@@ -1,7 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.OffsetDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record StackOverflowClientResponseItem(
     @JsonProperty("question_id")

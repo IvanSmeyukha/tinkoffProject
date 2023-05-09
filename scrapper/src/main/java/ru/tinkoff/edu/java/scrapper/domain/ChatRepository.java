@@ -1,9 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.domain;
 
-import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 
 public interface ChatRepository {
     void add(Long chatId);

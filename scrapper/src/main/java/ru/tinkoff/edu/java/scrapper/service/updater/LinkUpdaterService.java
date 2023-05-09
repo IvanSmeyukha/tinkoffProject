@@ -1,5 +1,10 @@
 package ru.tinkoff.edu.java.scrapper.service.updater;
 
+import java.net.URI;
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +20,6 @@ import ru.tinkoff.edu.java.scrapper.dto.StackOverflowClientResponse;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-import java.net.URI;
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

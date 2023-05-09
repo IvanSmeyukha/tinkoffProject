@@ -1,13 +1,13 @@
 package ru.tinkoff.edu.java.scrapper.domain.jdbc;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.tinkoff.edu.java.scrapper.domain.ChatRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JdbcChatRepository implements ChatRepository {

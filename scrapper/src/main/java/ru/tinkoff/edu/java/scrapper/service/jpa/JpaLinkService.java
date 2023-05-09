@@ -1,5 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
+import java.net.URI;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaChatRepository;
@@ -8,10 +12,6 @@ import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.exception.LinkFormatException;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-import java.net.URI;
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JpaLinkService implements LinkService {
