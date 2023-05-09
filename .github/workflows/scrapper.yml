@@ -4,6 +4,7 @@ on:
       - 'scrapper/**'
       - '.github/workflows/scrapper.yml'
       - 'link-parser/**'
+      - 'pom.xml'
 jobs:
   build:
     runs-on: ubuntu-latest
