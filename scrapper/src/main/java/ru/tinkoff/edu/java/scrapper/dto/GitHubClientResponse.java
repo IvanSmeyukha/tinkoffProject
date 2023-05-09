@@ -13,6 +13,6 @@ public record GitHubClientResponse(
     @JsonProperty("updated_at")
     OffsetDateTime updatedAt,
     @JsonProperty("html_url")
-    String html_url
+    String htmlUrl
 ) {
 }

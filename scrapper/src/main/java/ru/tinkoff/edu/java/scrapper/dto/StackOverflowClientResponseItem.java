@@ -9,9 +9,9 @@ public record StackOverflowClientResponseItem(
     @JsonProperty("account_id")
     Long accountId,
     @JsonProperty("is_answered")
-    Boolean is_answered,
+    Boolean isAnswered,
     @JsonProperty("creation_date")
-    OffsetDateTime creation_date,
+    OffsetDateTime creationDate,
     @JsonProperty("last_activity_date")
     OffsetDateTime lastActivityDate,
     @JsonProperty("last_edit_date")
