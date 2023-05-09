@@ -3,6 +3,7 @@ on:
     paths:
       - 'bot/**'
       - '.github/workflows/bot.yml'
+      - 'link-parser/**'
 jobs:
   build:
     runs-on: ubuntu-latest
