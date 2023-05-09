@@ -1,8 +1,8 @@
 package ru.tinkoff.edu.java.bot.service;
 
-import java.util.List;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.bot.service.command.Command;

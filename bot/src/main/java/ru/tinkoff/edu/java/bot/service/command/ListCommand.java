@@ -1,9 +1,9 @@
 package ru.tinkoff.edu.java.bot.service.command;
 
-import java.net.URI;
-import java.util.stream.Collectors;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import java.net.URI;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.bot.client.webclient.ScrapperClient;

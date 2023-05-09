@@ -1,11 +1,10 @@
 package ru.tinkoff.edu.java.bot.controller;
 
+import java.util.Arrays;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.tinkoff.edu.java.bot.dto.ApiErrorResponse;
-
-import java.util.Arrays;
 
 @RestControllerAdvice(
     basePackageClasses = UpdateController.class

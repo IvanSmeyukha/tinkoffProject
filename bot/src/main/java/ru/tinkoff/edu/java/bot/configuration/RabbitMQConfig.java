@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.bot.configuration;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -16,15 +18,14 @@ import ru.tinkoff.edu.java.bot.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.service.UpdatesSender;
 import ru.tinkoff.edu.java.bot.service.listener.ScrapperQueueListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "true")
 public class RabbitMQConfig {
     private final String queueName;
     private final String exchangeName;
     private final String routingKey;
+
+    private static final String DLX_PREFIX = ".dlx";
 
     public RabbitMQConfig(ApplicationConfig applicationConfig) {
         this.queueName = applicationConfig.queueName();
@@ -35,7 +36,7 @@ public class RabbitMQConfig {
     @Bean
     public DirectExchange deadDirectExchange() {
         return new DirectExchange(
-            exchangeName + ".dlx",
+            exchangeName + DLX_PREFIX,
             false,
             false
         );
@@ -44,7 +45,7 @@ public class RabbitMQConfig {
     @Bean
     public Queue deadQueue() {
         return QueueBuilder
-            .nonDurable(String.join(queueName, ".dlx"))
+            .nonDurable(queueName + DLX_PREFIX)
             .build();
     }
 
