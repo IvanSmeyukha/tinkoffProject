@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.bot.service.command;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
@@ -8,17 +10,15 @@ import ru.tinkoff.edu.java.bot.client.webclient.ScrapperClient;
 import ru.tinkoff.edu.java.bot.enums.CommandInfo;
 import ru.tinkoff.edu.java.linkparser.LinkParser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @Component
 @RequiredArgsConstructor
-public class UntrackCommand implements Command{
+public class UntrackCommand implements Command {
     private final ScrapperClient client;
     private static final String SUCCESS_MESSAGE = "Ссылка удалена из отслеживаемых";
     private static final String WRONG_LINK_FORMAT_MESSAGE = "Неверный формат ссылки";
     private static final String WRONG_MESSAGE_FORMAT_MESSAGE = "Неверный формат команды";
     private static final Pattern pattern = Pattern.compile("^\\s*/untrack\\s+(?<url>\\S+)\\s*$");
+
     @Override
     public String command() {
         return CommandInfo.UNTRACK.getCommand();

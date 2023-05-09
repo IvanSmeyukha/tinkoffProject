@@ -10,7 +10,7 @@ import ru.tinkoff.edu.java.bot.client.webclient.ScrapperClientImpl;
 public class ClientConfig {
 
     @Bean
-    public ScrapperClientImpl scrapperClient(@Value("${scrapper.url:${scrapper.base-url}}") String url){
+    public ScrapperClientImpl scrapperClient(@Value("${scrapper.url:${scrapper.base-url}}") String url) {
         return new ScrapperClientImpl(WebClient.builder().baseUrl(url).build());
     }
 

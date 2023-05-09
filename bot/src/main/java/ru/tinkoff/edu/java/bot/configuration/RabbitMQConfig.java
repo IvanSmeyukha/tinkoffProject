@@ -1,6 +1,10 @@
 package ru.tinkoff.edu.java.bot.configuration;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.support.converter.ClassMapper;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -22,35 +26,35 @@ public class RabbitMQConfig {
     private final String exchangeName;
     private final String routingKey;
 
-    public RabbitMQConfig(ApplicationConfig applicationConfig){
+    public RabbitMQConfig(ApplicationConfig applicationConfig) {
         this.queueName = applicationConfig.queueName();
         this.exchangeName = applicationConfig.exchangeName();
         this.routingKey = applicationConfig.routingkeyName();
     }
 
-
     @Bean
     public DirectExchange deadDirectExchange() {
         return new DirectExchange(
-                exchangeName + ".dlx",
-                false,
-                false
+            exchangeName + ".dlx",
+            false,
+            false
         );
     }
 
     @Bean
     public Queue deadQueue() {
         return QueueBuilder
-                .nonDurable(String.join(queueName,".dlx"))
-                .build();
+            .nonDurable(String.join(queueName, ".dlx"))
+            .build();
     }
 
     @Bean
     public Binding deadBinding() {
         return BindingBuilder.bind(deadQueue()).to(deadDirectExchange()).with(routingKey);
     }
+
     @Bean
-    public ClassMapper classMapper(){
+    public ClassMapper classMapper() {
         Map<String, Class<?>> mappings = new HashMap<>();
         mappings.put("ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest", LinkUpdateRequest.class);
 
@@ -61,14 +65,14 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter(ClassMapper classMapper){
-        Jackson2JsonMessageConverter jsonConverter=new Jackson2JsonMessageConverter();
+    public MessageConverter jsonMessageConverter(ClassMapper classMapper) {
+        Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
         jsonConverter.setClassMapper(classMapper);
         return jsonConverter;
     }
 
     @Bean
-    public ScrapperQueueListener scrapperQueueListener(UpdatesSender updatesSender){
+    public ScrapperQueueListener scrapperQueueListener(UpdatesSender updatesSender) {
         return new ScrapperQueueListener(updatesSender);
     }
 }
