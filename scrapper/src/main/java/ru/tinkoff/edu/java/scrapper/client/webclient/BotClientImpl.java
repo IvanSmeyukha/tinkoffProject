@@ -7,7 +7,7 @@ import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 @RequiredArgsConstructor
 public class BotClientImpl implements BotClient {
     private final WebClient webClient;
-    private final String UPDATES = "/updates";
+    private static final String UPDATES = "/updates";
 
     @Override
     public void fetchUpdate(LinkUpdateRequest linkUpdateRequest) {

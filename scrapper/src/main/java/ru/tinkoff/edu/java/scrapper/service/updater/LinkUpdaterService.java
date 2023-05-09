@@ -29,6 +29,7 @@ public class LinkUpdaterService implements LinkUpdater {
     private final GitHubClient gitHubClient;
     private final StackOverflowClient stackOverflowClient;
     private final UpdatesSender updatesSender;
+    private static final String UPDATE_MASSAGE = "Содержимое ссылки было обновлено";
 
     @Transactional
     @Override
@@ -51,7 +52,7 @@ public class LinkUpdaterService implements LinkUpdater {
                 .fetchRepo(gitHubLinkResponse.user(), gitHubLinkResponse.repository())
                 .block();
         if (gitHubClientResponse.updatedAt().isAfter(link.getLastUpdateTime())) {
-            sendUpdates(link, "Содержимое ссылки было обновлено");
+            sendUpdates(link, UPDATE_MASSAGE);
             link.setLastUpdateTime(gitHubClientResponse.updatedAt());
             linkService.updateLink(link);
         }
@@ -65,12 +66,12 @@ public class LinkUpdaterService implements LinkUpdater {
         stackOverflowClientResponse.items()
             .stream()
             .filter(response ->
-                response.lastEditDate() != null &&
-                    Objects.equals(response.questionId(), stackOverflowLinkResponse.id())
+                response.lastEditDate() != null
+                    && Objects.equals(response.questionId(), stackOverflowLinkResponse.id())
             )
             .forEach(response -> {
                 if (response.lastEditDate().isAfter(link.getLastUpdateTime())) {
-                    sendUpdates(link, "Содержимое ссылки было обновлено");
+                    sendUpdates(link, UPDATE_MASSAGE);
                     link.setLastUpdateTime(response.lastEditDate());
                     linkService.updateLink(link);
                 }

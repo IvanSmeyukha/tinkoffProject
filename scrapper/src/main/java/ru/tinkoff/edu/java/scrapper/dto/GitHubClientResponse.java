@@ -1,7 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.dto;
 
-import java.time.OffsetDateTime;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.OffsetDateTime;
 
 public record GitHubClientResponse(
     @JsonProperty("id")
