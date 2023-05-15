@@ -10,9 +10,10 @@ import ru.tinkoff.edu.java.bot.enums.CommandInfo;
 
 @Component
 @RequiredArgsConstructor
-public class StartCommand implements Command{
+public class StartCommand implements Command {
     private final ScrapperClient client;
     private static final String WELCOME_MESSAGE = "Привет!";
+
     @Override
     public String command() {
         return CommandInfo.START.getCommand();

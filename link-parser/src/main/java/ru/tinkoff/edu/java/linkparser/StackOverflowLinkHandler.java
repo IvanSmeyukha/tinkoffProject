@@ -17,7 +17,7 @@ public final class StackOverflowLinkHandler implements LinkHandler {
         Matcher matcher = pattern.matcher(link);
         if (matcher.matches()) {
             return new StackOverflowLinkResponse(Long.parseLong(matcher.group("id")));
-        } else if (nextHandler != null){
+        } else if (nextHandler != null) {
             return nextHandler.parseLink(link);
         }
         return null;

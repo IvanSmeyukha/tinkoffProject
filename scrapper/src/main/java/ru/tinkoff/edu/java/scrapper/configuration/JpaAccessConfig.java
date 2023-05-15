@@ -10,7 +10,6 @@ import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.jpa.JpaChatService;
 import ru.tinkoff.edu.java.scrapper.service.jpa.JpaLinkService;
 
-
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jpa")
 public class JpaAccessConfig {

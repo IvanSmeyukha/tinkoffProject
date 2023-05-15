@@ -14,13 +14,13 @@ public final class GitHubLinkHandler implements LinkHandler {
     }
 
     @Override
-    public LinkParserResponse parseLink(String link){
+    public LinkParserResponse parseLink(String link) {
         Matcher matcher = pattern.matcher(link);
         if (matcher.matches()) {
             String user = matcher.group("user");
             String repo = matcher.group("repo");
             return new GitHubLinkResponse(user, repo);
-        } else if (nextHandler != null){
+        } else if (nextHandler != null) {
             return nextHandler.parseLink(link);
         }
         return null;

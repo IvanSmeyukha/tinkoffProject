@@ -23,6 +23,7 @@
     <liquibase-core.version>4.20.0</liquibase-core.version>
     <postgresql.version>42.6.0</postgresql.version>
     <testcontainers.version>1.18.0</testcontainers.version>
+    <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
   </properties>
 
   <dependencies>

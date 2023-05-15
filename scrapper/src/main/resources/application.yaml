@@ -3,7 +3,10 @@ app:
   scheduler:
     interval: 10000
     check-interval: 10000
-  database-access-type: jpa
+  database-access-type: jdbc
+  use-queue: true
+  queue-name: "queue"
+  exchange-name: "exchange"
 
 server:
   port: 8081

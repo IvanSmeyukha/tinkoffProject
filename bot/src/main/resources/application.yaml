@@ -1,6 +1,10 @@
 app:
   test: apptest
   token: ${TOKEN}
+  queue-name: "queue"
+  exchange-name: "exchange"
+  routingkey-name: ""
+  use-queue: true
 
 server:
   port: 8082
@@ -12,3 +16,9 @@ scrapper:
 springdoc:
   swagger-ui:
     path: "/swagger-ui"
+
+spring:
+  rabbitmq:
+    listener:
+      simple:
+        default-requeue-rejected: false
