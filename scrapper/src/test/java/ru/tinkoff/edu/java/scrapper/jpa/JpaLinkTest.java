@@ -14,10 +14,8 @@ import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaChatRepository;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
-
 import java.time.OffsetDateTime;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -87,7 +85,7 @@ public class JpaLinkTest extends IntegrationEnvironment {
         assertEquals(links.get(0).getUrl(), TEST_LINK_1);
     }
 
-    private Link makeLink(String url, OffsetDateTime lastCheckTime){
+    private Link makeLink(String url, OffsetDateTime lastCheckTime) {
         Link link = new Link();
         link.setUrl(url);
         link.setLastCheckTime(lastCheckTime);

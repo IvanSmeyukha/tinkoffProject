@@ -12,7 +12,6 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -26,18 +25,18 @@ public abstract class IntegrationEnvironment {
 
     static {
         POSTGRESQL_CONTAINER = new PostgreSQLContainer<>("postgres:15")
-                .withDatabaseName("scrapper")
-                .withUsername("user")
-                .withPassword("1234");
+            .withDatabaseName("scrapper")
+            .withUsername("user")
+            .withPassword("1234");
         POSTGRESQL_CONTAINER.start();
         runMigrations();
     }
 
-    private static void runMigrations(){
+    private static void runMigrations() {
         Path changelogPath = new File(".").toPath().toAbsolutePath()
-                .getParent()
-                .getParent()
-                .resolve("migrations");
+            .getParent()
+            .getParent()
+            .resolve("migrations");
         try {
             Connection connection = openConnection();
             DirectoryResourceAccessor changelogDir = new DirectoryResourceAccessor(changelogPath);
@@ -52,13 +51,14 @@ public abstract class IntegrationEnvironment {
 
     public static Connection openConnection() throws SQLException {
         return DriverManager.getConnection(
-                POSTGRESQL_CONTAINER.getJdbcUrl(),
-                POSTGRESQL_CONTAINER.getUsername(),
-                POSTGRESQL_CONTAINER.getPassword());
+            POSTGRESQL_CONTAINER.getJdbcUrl(),
+            POSTGRESQL_CONTAINER.getUsername(),
+            POSTGRESQL_CONTAINER.getPassword()
+        );
     }
 
     @DynamicPropertySource
-    static void jdbcProperties(DynamicPropertyRegistry registry){
+    static void jdbcProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", POSTGRESQL_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRESQL_CONTAINER::getUsername);
         registry.add("spring.datasource.password", POSTGRESQL_CONTAINER::getPassword);

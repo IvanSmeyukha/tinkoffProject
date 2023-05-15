@@ -12,7 +12,7 @@ public class UpdatesSender {
 
     public void send(LinkUpdateRequest update) {
         for (Long id : update.tgChatIds()) {
-            bot.execute(new SendMessage(id,update.description() + update.url()));
+            bot.execute(new SendMessage(id, update.description() + update.url()));
         }
     }
 }

@@ -1,20 +1,18 @@
 package ru.tinkoff.edu.java.scrapper;
 
 import org.junit.Test;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import static org.junit.Assert.assertEquals;
 
-public class MigrationsTest extends IntegrationEnvironment{
+public class MigrationsTest extends IntegrationEnvironment {
     private static final String insert = "INSERT INTO chats(id) VALUES (?)";
     private static final String select = "SELECT * FROM chats";
 
     @Test
-    public void databaseSuccessfullyCreated(){
+    public void databaseSuccessfullyCreated() {
         try {
             Connection connection = openConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(insert);

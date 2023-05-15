@@ -6,7 +6,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import ru.tinkoff.edu.java.scrapper.dto.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.service.updater.UpdatesSender;
 
-
 @RequiredArgsConstructor
 public class ScrapperQueueProducer implements UpdatesSender {
     private final RabbitTemplate rabbitTemplate;

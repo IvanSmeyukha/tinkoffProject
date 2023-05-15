@@ -1,5 +1,10 @@
 package ru.tinkoff.edu.java.scrapper.service.updater;
 
+import java.net.URI;
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +21,6 @@ import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
-import java.net.URI;
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Objects;
-
 @Service
 @RequiredArgsConstructor
 public class LinkUpdaterService implements LinkUpdater {
@@ -30,12 +29,13 @@ public class LinkUpdaterService implements LinkUpdater {
     private final GitHubClient gitHubClient;
     private final StackOverflowClient stackOverflowClient;
     private final UpdatesSender updatesSender;
+    private static final String UPDATE_MASSAGE = "Содержимое ссылки было обновлено";
 
     @Transactional
     @Override
     public void update(Duration checkInterval) {
         List<Link> uncheckedLinks =
-                linkService.findLongTimeAgoCheckedLinks(OffsetDateTime.now().minus(checkInterval));
+            linkService.findLongTimeAgoCheckedLinks(OffsetDateTime.now().minus(checkInterval));
         for (Link link : uncheckedLinks) {
             LinkParserResponse response = LinkParser.parseLink(link.getUrl().toString());
             if (response instanceof GitHubLinkResponse resp) {
@@ -48,11 +48,11 @@ public class LinkUpdaterService implements LinkUpdater {
 
     private void checkGitHubUpdates(GitHubLinkResponse gitHubLinkResponse, Link link) {
         GitHubClientResponse gitHubClientResponse =
-                gitHubClient
-                        .fetchRepo(gitHubLinkResponse.user(), gitHubLinkResponse.repository())
-                        .block();
+            gitHubClient
+                .fetchRepo(gitHubLinkResponse.user(), gitHubLinkResponse.repository())
+                .block();
         if (gitHubClientResponse.updatedAt().isAfter(link.getLastUpdateTime())) {
-            sendUpdates(link, "Содержимое ссылки было обновлено");
+            sendUpdates(link, UPDATE_MASSAGE);
             link.setLastUpdateTime(gitHubClientResponse.updatedAt());
             linkService.updateLink(link);
         }
@@ -60,32 +60,32 @@ public class LinkUpdaterService implements LinkUpdater {
 
     private void checkStackOverflowUpdates(StackOverflowLinkResponse stackOverflowLinkResponse, Link link) {
         StackOverflowClientResponse stackOverflowClientResponse =
-                stackOverflowClient
-                        .fetchQuestion(stackOverflowLinkResponse.id())
-                        .block();
+            stackOverflowClient
+                .fetchQuestion(stackOverflowLinkResponse.id())
+                .block();
         stackOverflowClientResponse.items()
-                .stream()
-                .filter(response ->
-                        response.lastEditDate() != null &&
-                                Objects.equals(response.questionId(), stackOverflowLinkResponse.id())
-                )
-                .forEach(response -> {
-                    if (response.lastEditDate().isAfter(link.getLastUpdateTime())) {
-                        sendUpdates(link, "Содержимое ссылки было обновлено");
-                        link.setLastUpdateTime(response.lastEditDate());
-                        linkService.updateLink(link);
-                    }
-                });
+            .stream()
+            .filter(response ->
+                response.lastEditDate() != null
+                    && Objects.equals(response.questionId(), stackOverflowLinkResponse.id())
+            )
+            .forEach(response -> {
+                if (response.lastEditDate().isAfter(link.getLastUpdateTime())) {
+                    sendUpdates(link, UPDATE_MASSAGE);
+                    link.setLastUpdateTime(response.lastEditDate());
+                    linkService.updateLink(link);
+                }
+            });
     }
 
     private void sendUpdates(Link link, String description) {
         updatesSender.sendUpdate(
-                new LinkUpdateRequest(
-                        URI.create(link.getUrl()),
-                        description,
-                        chatService
-                                .findChatsByUrl(URI.create(link.getUrl()))
-                )
+            new LinkUpdateRequest(
+                URI.create(link.getUrl()),
+                description,
+                chatService
+                    .findChatsByUrl(URI.create(link.getUrl()))
+            )
         );
     }
 }

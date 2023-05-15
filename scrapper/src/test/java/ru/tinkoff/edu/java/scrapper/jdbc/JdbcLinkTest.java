@@ -3,16 +3,18 @@ package ru.tinkoff.edu.java.scrapper.jdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.ScrapperApplication;
 import ru.tinkoff.edu.java.scrapper.domain.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.entity.Link;
-
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -29,6 +31,14 @@ public class JdbcLinkTest extends IntegrationEnvironment {
 
     private final URI TEST_LINK = URI.create("https://edu.tinkoff.ru");
 
+    @Configuration
+    static class MyIntegrationTests {
+        @DynamicPropertySource
+        static void registerProperties(DynamicPropertyRegistry registry) {
+            registry.add("database-access-type", () -> "jdbc");
+        }
+    }
+
     @Test
     @Transactional
     @Rollback
@@ -36,7 +46,7 @@ public class JdbcLinkTest extends IntegrationEnvironment {
         Link link = linkRepository.add(TEST_LINK).get();
 
         assertNotNull(link);
-        assertEquals(TEST_LINK, link.getUrl());
+        assertEquals(TEST_LINK.toString(), link.getUrl());
     }
 
     @Test
@@ -47,7 +57,7 @@ public class JdbcLinkTest extends IntegrationEnvironment {
         Link link = linkRepository.findLinkByUrl(TEST_LINK).get();
 
         assertNotNull(link);
-        assertEquals(TEST_LINK, link.getUrl());
+        assertEquals(TEST_LINK.toString(), link.getUrl());
     }
 
     @Test
@@ -59,9 +69,9 @@ public class JdbcLinkTest extends IntegrationEnvironment {
         Chat chat = addChat();
         linkRepository.addChatLinkSubscription(chat.getId(), link.getId());
         String query = """
-                SELECT link_id FROM links_chats
-                WHERE chat_id = ?
-                """;
+            SELECT link_id FROM links_chats
+            WHERE chat_id = ?
+            """;
         Long linkId = jdbcTemplate.queryForObject(query, Long.class, chat.getId());
 
         assertNotNull(linkId);
@@ -82,24 +92,24 @@ public class JdbcLinkTest extends IntegrationEnvironment {
 
     private Chat addChat() {
         String query = """
-                INSERT INTO chats (id)
-                VALUES (1)
-                RETURNING id
-                """;
+            INSERT INTO chats (id)
+            VALUES (1)
+            RETURNING id
+            """;
         return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Chat.class));
     }
 
     private Link addLink() {
         String query = """
-                INSERT INTO links (url, last_check_time)
-                VALUES (?, ?)
-                RETURNING *
-                """;
+            INSERT INTO links (url, last_check_time)
+            VALUES (?, ?)
+            RETURNING *
+            """;
         return jdbcTemplate.queryForObject(
-                query,
-                new BeanPropertyRowMapper<>(Link.class),
-                TEST_LINK.toString(),
-                OffsetDateTime.now()
+            query,
+            new BeanPropertyRowMapper<>(Link.class),
+            TEST_LINK.toString(),
+            OffsetDateTime.now()
         );
     }
 
